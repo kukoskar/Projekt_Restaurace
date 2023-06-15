@@ -1,2 +1,9 @@
-package com.engeto.attributes;public class Quantity {
+package com.engeto.attributes;
+
+public class Quantity {
+
+    private Integer quantity;
+
+
+
 }
