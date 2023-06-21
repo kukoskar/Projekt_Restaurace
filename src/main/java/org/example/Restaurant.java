@@ -11,9 +11,8 @@ public class Restaurant {
 
     public static void main(String[] args) throws DishException {
 
-        Restaurant restaurant = new Restaurant();
-        List<Image> imageList = new ArrayList<>();
         DishList dishList = new DishList();
+        List<Image> imageList = new ArrayList<>();
 
         Image imageBlank = new Image("blank");
         Image imageRizek1 = new Image("rizek-01");
@@ -56,26 +55,22 @@ public class Restaurant {
         menuList.add(dish6);
         menuList.add(dish8);
 
-        Order order1 = new Order(15, LocalTime.of(12, 10), LocalTime.of(12, 16), 1, true);
-        order1.addDishWhatIsInMenuWithQuantity(dish1,4,menuList);
-     //   order1.dishList.menuList.add(dish3);
-        System.out.println(order1.getOrderInfo() + " objednávka 1");
-      //  order1.addDishWhatIsInMenuWithQuantity(dish2,4,menuList);
+        Order order1 = new Order(15,  2, LocalTime.of(12, 10), LocalTime.of(12, 16), 1, true, "popis");
+        Order order2 = new Order(15,  3, LocalTime.of(12, 10), LocalTime.of(12, 16), 1, true, "popis");
+        Order order3 = new Order(1, 1, LocalTime.of(12, 12), LocalTime.of(12, 14), 2, true, "popis");
+        Order order4 = new Order(1, 2, LocalTime.of(12, 15), LocalTime.of(12, 18), 2, true, "popis");
 
-        Order order2 = new Order(15, LocalTime.of(12, 10), LocalTime.of(12, 16), 1, true);
-        Order order3 = new Order(1, LocalTime.of(12, 12), LocalTime.of(12, 14), 2, true);
-        Order order4 = new Order(1, LocalTime.of(12, 15), LocalTime.of(12, 18), 2, true);
-
-
-        System.out.println(" ________________");
-        System.out.println(order1.toString() + " ________________");
-
-        System.out.println("Aktuálně jsou v menu jídla: \n" + menuList);
-        System.out.println("\n");
+        // order1.addDishWhatIsInMenuWithQuantity(menuList);
+        order1.dishes.add(dish1);
+        order1.dishes.add(dish2);
+        order1.dishes.add(dish3);
+        order2.dishes.add(dish8);
 
         orderList.add(order1);
         orderList.add(order2);
 
+        System.out.println("Aktuálně jsou v menu jídla: \n" + menuList);
+        System.out.println("\n");
 
         System.out.println("Je objednávka rozpracovaná ? " + "\n" + order1.isOrderInProgress());
         System.out.printf("Seznam objednávek: " + "\n" + orderList);
@@ -85,23 +80,22 @@ public class Restaurant {
         table1.writeHeader();
         System.out.println(" "+order1);
         System.out.println(" "+order2);
-        System.out.println(" "+order3);
-        table1.writeFooter();
+        table2.writeFooter();
+        System.out.println("\n");
 
         table2.writeHeader();
         System.out.println(" "+order4);
         table2.writeFooter();
         System.out.println("\n");
+
         System.out.println(dish1);
         System.out.println(dish2);
         System.out.println("\n");
+
         System.out.println("Celkový počet jídel: " + dishList.size());
         System.out.println(dishList.getDishFromDishList());
         System.out.println("Počet jídel v menu: " + menuList.size());
         System.out.println(dishList.getDishFromMenuList());
-
-
-        //+ order1.getOrderInfo() + order2.getOrderInfo() + order3.getOrderInfo());
 
         System.out.println("Ceny všech jídel: " + "\n" + dishList.getPriceFromDishList());
 

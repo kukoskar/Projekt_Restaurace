@@ -3,7 +3,7 @@ package com.engeto.attributes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dish {
+public class Dish implements Assignable {
     private static int nextId = 1;
     private int id;
     private String title;
@@ -38,7 +38,10 @@ public class Dish {
     }
 
 
-    public Dish(String title) {
+    public Dish() {
+    }
+
+    public Dish(String description) {
     }
 
     public int getId() {
@@ -120,11 +123,14 @@ public class Dish {
 
     @Override
     public String toString() {
-        return  getTitle() + " " + getDescription() + " " + getImage1();
+        return  getId() + ". " + getTitle() + " " + getDescription() + " " + getImage1();
     }
 
 
-
+    @Override
+    public String getOrderInfo() throws DishException {
+        return null;
+    }
 }
 
 

@@ -7,33 +7,45 @@ import java.util.List;
 public class DishList extends ArrayList<Dish> implements Assignable {
 
     private Dish dish;
-
+    public List<Dish> dishList = new ArrayList<>();
     public List<Dish> menuList = new ArrayList<>();
 
-    public DishList(Dish dish){
+    public DishList(Dish dish, List<Dish> dishList, List<Dish> menuList) {
         this.dish = dish;
+        this.dishList = dishList;
+        this.menuList = menuList;
     }
+
     public DishList() {
     }
-
-
-
 
     public Dish getDish() {
         return dish;
     }
 
-  /*  public void setDish(Dish dish) throws DishException {
+    public void setDish(List<Dish> menuList) throws DishException {
         if(!menuList.contains(dish)) {
             throw new DishException("Jídlo není v aktuálním menu ");
         }
-
     }
-    public void checkDish(Dish dish) throws DishException {
-        if(!menuList.contains(dish)) {
-            throw new DishException("Jídlo není v aktuálním menu ");
-        }
-    }*/
+
+    public List<Dish> getDishList() {
+        return dishList;
+    }
+
+    public void setDishList(List<Dish> dishList) {
+        this.dishList = dishList;
+    }
+
+    public List<Dish> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<Dish> menuList) {
+        this.menuList = menuList;
+    }
+
+
 
 
     public String getDishFromDishList() {
@@ -77,5 +89,6 @@ public class DishList extends ArrayList<Dish> implements Assignable {
     public String toString() {
         return  "Jídlo: " + getDish() + " " + "x";
     }
+
 
 }

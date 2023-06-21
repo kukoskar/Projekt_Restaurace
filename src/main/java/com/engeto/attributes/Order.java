@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Order extends ArrayList<Dish> implements Assignable {
+public class Order extends Dish implements Assignable {
 
 
    private static int nextId = 1;
@@ -16,11 +16,15 @@ public class Order extends ArrayList<Dish> implements Assignable {
 
    private Dish dish;
 
-   public DishList dishList = new DishList();
+   private Integer quantity;
+
+    public List<Dish> dishes = new ArrayList<>();
+
+   public DishList menuList = new DishList();
 
    public List<Order> orderList = new ArrayList<>();
 
-   private int quantity;
+
 
    private int waiterNo;
 
@@ -31,9 +35,12 @@ public class Order extends ArrayList<Dish> implements Assignable {
    private boolean orderInProgress;
 
 
-    public Order(int table, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, boolean orderInProgress) {
+    public Order(int table, int quantity, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, boolean orderInProgress, String description) {
+        super(description);
         this.id = nextId++;
         this.table = table;
+
+        this.quantity = quantity;
         this.waiterNo = waiterNo;
         this.orderedTime = orderedTime;
         this.fulfilmentTime = fulfilmentTime;
@@ -41,23 +48,11 @@ public class Order extends ArrayList<Dish> implements Assignable {
 
     }
 
-    public Order(int table, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo) {
-        this(table, orderedTime, fulfilmentTime, waiterNo, true);
+    public Order(int table, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, String description) {
+        this(table, 1, orderedTime, fulfilmentTime, waiterNo, true, description);
     }
 
 
-
-    public void setDishList(DishList dishList) {
-        this.dishList = dishList;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
 
     public int getId() {
@@ -84,6 +79,13 @@ public class Order extends ArrayList<Dish> implements Assignable {
         this.dish = dish;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public int getWaiterNo() {
         return waiterNo;
@@ -117,49 +119,32 @@ public class Order extends ArrayList<Dish> implements Assignable {
         this.orderInProgress = orderInProgress;
     }
 
-    public String getDishPrice() {
-        return String.valueOf(dish.getPrice() * getQuantity());
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Integer getDishPrice() {
+        return Integer.valueOf(String.valueOf(getPrice() * getQuantity()));
     }
 
 
-   /* @Override
+    @Override
     public String getOrderInfo() {
-        return dish.getTitle() + " (" + dish.getPrice() + " Kč)" +" doba přípravy " + dish.getPreparationTime() + " min ";
-    }*/
+        return getTitle() + " (" + getDishPrice() + " Kč)" +" doba přípravy " + getPreparationTime() + " min ";
+    }
 
     @Override
     public String toString() {
-        return (getId() + ". " + getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. " +  getWaiterNo());
-    }
-
-    public void addDishWhatIsInMenuWithQuantity(Dish dish, int quantity, List<Dish> menuList) {
-        for (Dish dish1 :
-                menuList) {
-            if (dish.equals(menuList)) {
-                for (int i = 0; i < quantity; i++) {
-                    menuList.add(dish);
-                }
-            } else {
-                System.out.println("Toto jídlo není v menu.");
-            }
-        }
-    }
-
-    public String showMePriceOfOrder(){
-        int celkovaCena=0;
-        for (Dish dish :
-                dishList) {
-            celkovaCena += dish.getPrice();
-        }
-        return "Celková cena objednávky je: "+celkovaCena;
+        return ( getId() + ". " + getTitle() + " (" + getQuantity() + "x)    " + getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. "
+                +  getWaiterNo() + " ");
     }
 
 
-    @Override
-    public String getOrderInfo() {
-        return (getId() + ". "  + getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. " +  getWaiterNo());
-    }
-}
+
+   }
+
+
+
 
 
 
