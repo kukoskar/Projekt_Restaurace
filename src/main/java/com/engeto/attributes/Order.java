@@ -1,7 +1,6 @@
 package com.engeto.attributes;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,13 +17,7 @@ public class Order extends Dish implements Assignable {
 
    private Integer quantity;
 
-    public List<Dish> dishes = new ArrayList<>();
-
    public DishList menuList = new DishList();
-
-   public List<Order> orderList = new ArrayList<>();
-
-
 
    private int waiterNo;
 
@@ -35,11 +28,11 @@ public class Order extends Dish implements Assignable {
    private boolean orderInProgress;
 
 
-    public Order(int table, int quantity, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, boolean orderInProgress, String description) {
+    public Order(int table, Dish dish, int quantity, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, boolean orderInProgress, String description) {
         super(description);
         this.id = nextId++;
         this.table = table;
-
+        this.dish = dish;
         this.quantity = quantity;
         this.waiterNo = waiterNo;
         this.orderedTime = orderedTime;
@@ -48,12 +41,33 @@ public class Order extends Dish implements Assignable {
 
     }
 
-    public Order(int table, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, String description) {
-        this(table, 1, orderedTime, fulfilmentTime, waiterNo, true, description);
+    public Order(int table, Dish dish, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, String description) throws DishException {
+        this(table, dish, 1, orderedTime, fulfilmentTime, waiterNo, true, description);
+    }
+
+    public void addDishWhatIsInMenuWithQuantity(Dish dish, int quantity, List<Dish> menuList) {
+        for (Dish dish1 :
+                menuList) {
+            if (dish.equals(menuList)) {
+                for (int i = 0; i < quantity; i++) {
+                    menuList.add(dish);
+                }
+            } else {
+                System.out.println("Toto jídlo není v menu.");
+            }
+        }
     }
 
 
 
+    public String showMePriceOfOrder(){
+        int celkovaCena=0;
+        for (Dish dish :
+                menuList) {
+            celkovaCena += dish.getPrice();
+        }
+        return "Celková cena objednávky je: "+celkovaCena;
+    }
 
     public int getId() {
         return id;
@@ -135,7 +149,7 @@ public class Order extends Dish implements Assignable {
 
     @Override
     public String toString() {
-        return ( getId() + ". " + getTitle() + " (" + getQuantity() + "x)    " + getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. "
+        return ( getId() + ". " + dish.getTitle() + " (" + getQuantity() + "x)    " + getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. "
                 +  getWaiterNo() + " ");
     }
 
