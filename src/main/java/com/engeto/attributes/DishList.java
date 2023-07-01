@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DishList extends ArrayList<Dish> implements Assignable {
+public class DishList extends ArrayList<Dish> {
 
-    private Dish dish;
     public List<Dish> dishList = new ArrayList<>();
     public List<Dish> menuList = new ArrayList<>();
 
-    public DishList(Dish dish, List<Dish> dishList, List<Dish> menuList) {
-        this.dish = dish;
+    public DishList(List<Dish> dishList, List<Dish> menuList) {
         this.dishList = dishList;
         this.menuList = menuList;
     }
@@ -19,11 +17,8 @@ public class DishList extends ArrayList<Dish> implements Assignable {
     public DishList() {
     }
 
-    public Dish getDish() {
-        return dish;
-    }
 
-    public void setDish(List<Dish> menuList) throws DishException {
+    public void setDish(List<Dish> menuList, Dish dish) throws DishException {
         if(!menuList.contains(dish)) {
             throw new DishException("Jídlo není v aktuálním menu ");
         }
@@ -80,14 +75,10 @@ public class DishList extends ArrayList<Dish> implements Assignable {
     }
 
 
-    @Override
-    public String getOrderInfo() {
-        return dish.getTitle() + " (" + dish.getPrice() + " Kč)" +" doba přípravy " + dish.getPreparationTime() + " min ";
-    }
 
     @Override
     public String toString() {
-        return  "Jídlo: " + getDish() + " " + "x";
+        return  "Jídla v menu: " +  getMenuList() + "\n";
     }
 
 

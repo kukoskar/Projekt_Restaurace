@@ -4,7 +4,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 
-public class Order extends Dish implements Assignable {
+public class Order extends Dish {
 
 
    private static int nextId = 1;
@@ -142,10 +142,7 @@ public class Order extends Dish implements Assignable {
     }
 
 
-    @Override
-    public String getOrderInfo() {
-        return getTitle() + " (" + getDishPrice() + " Kč)" +" doba přípravy " + getPreparationTime() + " min ";
-    }
+
 
     @Override
     public String toString() {
