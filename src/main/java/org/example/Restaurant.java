@@ -51,17 +51,17 @@ public class Restaurant {
         Order order4 = new Order(1, dish6, 2, LocalTime.of(12, 15), LocalTime.of(12, 18), 2, true, "popis");
 
         order1.menuList.add(dish1);
+        order1.menuList.add(dish2);
         order1.menuList.add(dish3);
-
-        orderList.add(order1);
-        orderList.add(order2);
+        order1.menuList.add(dish6);
 
         order1.addDishWhatIsInMenuWithQuantity(dish1, 2, menuList);
-        System.out.println(order1 + "\n");
+        order1.addDishWhatIsInMenuWithQuantity(dish2, 2, menuList);
+        System.out.println(order1);
+        System.out.println(order2 + "\n");
 
         System.out.println("Aktuálně jsou v menu jídla: \n" + menuList);
         System.out.println("Je objednávka rozpracovaná ? " + "\n" + order1.isOrderInProgress());
-        System.out.printf("Seznam objednávek: " + "\n" + orderList);
         System.out.println("\n");
         System.out.println("Objednávka: " + order1 + "\n");
 

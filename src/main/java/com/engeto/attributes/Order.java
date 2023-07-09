@@ -1,6 +1,7 @@
 package com.engeto.attributes;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,7 +18,7 @@ public class Order extends Dish {
 
    private Integer quantity;
 
-   public DishList menuList = new DishList();
+   public List<Dish> menuList = new ArrayList<>();
 
    private int waiterNo;
 
