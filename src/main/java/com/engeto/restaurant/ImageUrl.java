@@ -1,14 +1,14 @@
-package com.engeto.attributes;
+package com.engeto.restaurant;
 
-public class Image {
+public class ImageUrl {
 
     private String url;
 
-    public Image(String url) {
+    public ImageUrl(String url) {
         this.url = url;
     }
 
-    public Image() {
+    public ImageUrl() {
     }
 
     public String getUrl() {

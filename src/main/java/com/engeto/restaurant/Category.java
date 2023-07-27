@@ -1,4 +1,4 @@
-package com.engeto.attributes;
+package com.engeto.restaurant;
 
 public enum Category {
 

@@ -1,42 +1,56 @@
 package org.example;
 
-import com.engeto.attributes.*;
+import com.engeto.restaurant.*;
 
 import java.time.LocalTime;
 import java.util.*;
 
 
 public class Restaurant {
-    static List<Order> orderList = new ArrayList<>();
 
-    public static void main(String[] args) throws DishException {
+    public Integer totalSpend(){
+        Integer utrataCelkem = 0;
+        for (Order order: this.orderList){
+            for (Dish dish: order.getMenuList()){
+                utrataCelkem += dish.getPrice() * dish.getQuantity();
+            }
+        }
+        return utrataCelkem;
+    }
+
+    public Integer waiterOrderPrice(Integer waiter){
+        Integer utrata=0;
+        for (Order order : this.orderList) {
+            if (order.getWaiterNo() == waiter)
+                for (Dish dish : order.getMenuList())
+                    utrata += dish.getPrice() * dish.getQuantity();
+        }
+        return utrata;
+    }
+    List<Order> orderList = new ArrayList<>();
+
+    public static void main(String[] args) {
 
         DishList dishList = new DishList();
-        List<Image> imageList = new ArrayList<>();
+        Restaurant restaurant = new Restaurant();
+        RestaurantManager restaurantManager= new RestaurantManager();
 
-        Image imageBlank = new Image("blank");
-        Image imageRizek1 = new Image("rizek-01");
-        Image imageRizek2 = new Image("rizek-02");
-        Image imagePstruh1 = new Image("pstruh-01");
-        Image imageCesnecka1 = new Image("cesnecka-01");
-        Image imageBirell1 = new Image("birell-01");
-        Image imageKofola1 = new Image("kofola-01");
-        imageList.addAll(Arrays.asList(imageBlank, imageRizek1, imageRizek2, imagePstruh1, imageCesnecka1, imageBirell1, imageKofola1));
-        System.out.println(imageList);
-        Image imageKofola2 = new Image("kofola-02");
-        imageList.add(imageKofola2);
-        System.out.println(imageList);
-        imageList.remove(imageKofola2);
-        System.out.println(imageList+"\n");
+        ImageUrl imageBlank = new ImageUrl("blank");
+        ImageUrl imageRizek1 = new ImageUrl("rizek-01");
+        ImageUrl imageRizek2 = new ImageUrl("rizek-02");
+        ImageUrl imagePstruh1 = new ImageUrl("pstruh-01");
+        ImageUrl imageCesnecka1 = new ImageUrl("cesnecka-01");
+        ImageUrl imageBirell1 = new ImageUrl("birell-01");
+        ImageUrl imageKofola1 = new ImageUrl("kofola-01");
 
-        Dish dish1 = new Dish("Kuřecí řízek obalovaný", 120, 8, imageRizek1, imageRizek2, Category.FOOD, " 150g");
-        Dish dish2 = new Dish("Pstruh na víně", 135,8, imagePstruh1, imageBlank, Category.FOOD, " 200g");
-        Dish dish3 = new Dish("Hranolky", 35, 10, imageBlank, Category.FOOD, "150g");
-        Dish dish4 = new Dish("Bramborový salát", 35, 4, imageBlank, Category.FOOD," 150g");
-        Dish dish5 = new Dish("Bramboračka", 45, 3, imageBlank, Category.SOUP, " 0,3l");
-        Dish dish6 = new Dish("Česnečka", 44, 3, imageCesnecka1, Category.SOUP, " 0,3l");
-        Dish dish7 = new Dish("Birell", 42, 3, imageBirell1, Category.DRINK," 0,5l");
-        Dish dish8 = new Dish("Kofola", 33, 3, imageKofola1, Category.DRINK, " 0,3l");
+        Dish dish1 = new Dish("Kuřecí řízek obalovaný", 120, 2,8, imageRizek1, imageRizek2, Category.FOOD, " 150g");
+        Dish dish2 = new Dish("Pstruh na víně", 135, 1,8, imagePstruh1, imageBlank, Category.FOOD, " 200g");
+        Dish dish3 = new Dish("Hranolky", 35, 2, 10, imageBlank, Category.FOOD, "150g");
+        Dish dish4 = new Dish("Bramborový salát", 35, 1, 4, imageBlank, Category.FOOD," 150g");
+        Dish dish5 = new Dish("Bramboračka", 45, 1, 3, imageBlank, Category.SOUP, " 0,3l");
+        Dish dish6 = new Dish("Česnečka", 44, 1, 3, imageCesnecka1, Category.SOUP, " 0,3l");
+        Dish dish7 = new Dish("Birell", 42, 1, 3, imageBirell1, Category.DRINK," 0,5l");
+        Dish dish8 = new Dish("Kofola", 33, 2, 3, imageKofola1, Category.DRINK, " 0,3l");
 
         dishList.addAll(Arrays.asList(dish1, dish2, dish3, dish4, dish5, dish6, dish7, dish8));
         List<Dish> menuList = new ArrayList<>();
@@ -45,30 +59,50 @@ public class Restaurant {
         menuList.add(dish6);
         menuList.add(dish8);
 
-        Order order1 = new Order(15, dish1, 2, LocalTime.of(12, 10), LocalTime.of(12, 16), 1, true, "popis");
-        Order order2 = new Order(15, dish2, 3, LocalTime.of(12, 10), LocalTime.of(12, 16), 1, true, "popis");
-        Order order3 = new Order(1, dish3, 1, LocalTime.of(12, 12), LocalTime.of(12, 14), 2, true, "popis");
-        Order order4 = new Order(1, dish6, 2, LocalTime.of(12, 15), LocalTime.of(12, 18), 2, true, "popis");
+        Order order1 = new Order(15, dish1, LocalTime.of(12, 10), LocalTime.of(12, 16), 2, true);
+        Order order2 = new Order(15, dish3, LocalTime.of(12, 11), LocalTime.of(12, 16), 2, true);
+        Order order3 = new Order(1, dish6, LocalTime.of(12, 12), LocalTime.of(12, 14), 1, true);
+        Order order4 = new Order(1, dish8, LocalTime.of(12, 15), LocalTime.of(12, 18), 1, true);
 
-        order1.menuList.add(dish1);
-        order1.menuList.add(dish2);
-        order1.menuList.add(dish3);
-        order1.menuList.add(dish6);
+        order1.getMenuList().add(dish1);
+        order2.getMenuList().add(dish3);
+        order3.getMenuList().add(dish6);
+        order4.getMenuList().add(dish8);
 
-        order1.addDishWhatIsInMenuWithQuantity(dish1, 2, menuList);
         order1.addDishWhatIsInMenuWithQuantity(dish2, 2, menuList);
+
+        restaurant.orderList.add(order1);
+        restaurant.orderList.add(order2);
+        restaurant.orderList.add(order3);
+        restaurant.orderList.add(order4);
+        Collections.sort(restaurant.orderList, new SortComparator());
+        restaurant.orderList.forEach( n -> { System.out.println("Číšnik " + n.getWaiterNo() +  ".  objednávka č." + n.getId() + "  čas objednání: " + n.getOrderedTime() );
+        } );
+
         System.out.println(order1);
         System.out.println(order2 + "\n");
 
-        System.out.println("Aktuálně jsou v menu jídla: \n" + menuList);
-        System.out.println("Je objednávka rozpracovaná ? " + "\n" + order1.isOrderInProgress());
-        System.out.println("\n");
-        System.out.println("Objednávka: " + order1 + "\n");
+        System.out.println("Počet jídel v menu : " + dishList.size());
+        System.out.println("Aktuálně jsou v menu jídla: \n" + menuList + "\n");
 
-        System.out.println(" "+order1);
-        System.out.println(" "+order2);
-        System.out.println(" "+order4);
-        System.out.println("\n");
+        System.out.println("Objednávka: " + order1);
+        System.out.println("Objednávka: " + order2);
+        System.out.println("Objednávka: " + order3);
+        System.out.println("Objednávka: " + order4 + "\n");
+
+        System.out.println("Počet objednávek: " + restaurant.orderList.size());
+        System.out.println("Dnešní objednávky: \n" + restaurant.orderList);
+
+        System.out.println(restaurantManager.orderInProgress(restaurant.orderList));
+        System.out.println("Cena objednávek pro číšnika 1: " + restaurant.waiterOrderPrice(1) + " Kč"+ "\n");
+        System.out.println("Celková útrata: " + restaurant.totalSpend() + " Kč" + "\n");
+
+        System.out.println("** Objednávka pro stůl č. 1 **" + "\n"
+                + "****"
+                + restaurant.orderList+ "\n"
+                + "******"
+        );
+
 
         System.out.println(dish1);
         System.out.println(dish2);
@@ -76,10 +110,6 @@ public class Restaurant {
 
         System.out.println("Celkový počet jídel: " + dishList.size());
         System.out.println(dishList.getDishFromDishList());
-        System.out.println("Počet jídel v menu: " + menuList.size());
-        System.out.println(dishList.getDishFromMenuList());
-
-        System.out.println("Ceny všech jídel: " + "\n" + dishList.getPriceFromDishList());
 
         dishList.remove(dish7);
         System.out.println("Jídla v menu po odebrání Birellu: " + "\n" + dishList.getDishFromDishList());
@@ -88,7 +118,11 @@ public class Restaurant {
         System.out.println("Počet jídel v menu : " + dishList.size());
         System.out.println(dish1.getDishInfo());
 
-
+        try {
+        restaurantManager.saveToFile(Settings.getFilename(), Settings.getDelimeter());
+        } catch (DishException e) {
+            System.err.println(e.getLocalizedMessage());
+        }
 
     }
  }

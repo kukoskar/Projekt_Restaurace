@@ -1,4 +1,4 @@
-package com.engeto.attributes;
+package com.engeto.restaurant;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -16,9 +16,10 @@ public class Order extends Dish {
 
    private Dish dish;
 
-   private Integer quantity;
+   private List<Dish> menuList = new ArrayList<>();
 
-   public List<Dish> menuList = new ArrayList<>();
+   private List<Order> orderList = new ArrayList<>();
+
 
    private int waiterNo;
 
@@ -29,12 +30,12 @@ public class Order extends Dish {
    private boolean orderInProgress;
 
 
-    public Order(int table, Dish dish, int quantity, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, boolean orderInProgress, String description) {
-        super(description);
+
+
+    public Order(int table, Dish dish, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, boolean orderInProgress) {
         this.id = nextId++;
         this.table = table;
         this.dish = dish;
-        this.quantity = quantity;
         this.waiterNo = waiterNo;
         this.orderedTime = orderedTime;
         this.fulfilmentTime = fulfilmentTime;
@@ -42,13 +43,15 @@ public class Order extends Dish {
 
     }
 
-    public Order(int table, Dish dish, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo, String description) throws DishException {
-        this(table, dish, 1, orderedTime, fulfilmentTime, waiterNo, true, description);
+    public Order(int table, Dish dish, LocalTime orderedTime, LocalTime fulfilmentTime, int waiterNo) {
+        this(table, dish, orderedTime, fulfilmentTime, waiterNo, true);
+    }
+
+    public Order(){
     }
 
     public void addDishWhatIsInMenuWithQuantity(Dish dish, int quantity, List<Dish> menuList) {
-        for (Dish dish1 :
-                menuList) {
+        for (Dish dish1 : menuList) {
             if (dish.equals(menuList)) {
                 for (int i = 0; i < quantity; i++) {
                     menuList.add(dish);
@@ -61,14 +64,6 @@ public class Order extends Dish {
 
 
 
-    public String showMePriceOfOrder(){
-        int celkovaCena=0;
-        for (Dish dish :
-                menuList) {
-            celkovaCena += dish.getPrice();
-        }
-        return "Celková cena objednávky je: "+celkovaCena;
-    }
 
     public int getId() {
         return id;
@@ -94,14 +89,6 @@ public class Order extends Dish {
         this.dish = dish;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public int getWaiterNo() {
         return waiterNo;
     }
@@ -118,6 +105,22 @@ public class Order extends Dish {
         this.orderedTime = orderedTime;
     }
 
+    public List<Dish> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<Dish> menuList) {
+        this.menuList = menuList;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
+    }
+
     public LocalTime getFulfilmentTime() {
        return fulfilmentTime;
     }
@@ -126,29 +129,26 @@ public class Order extends Dish {
         this.fulfilmentTime = fulfilmentTime;
     }
 
-    public boolean isOrderInProgress() {
-        return orderInProgress;
-    }
 
     public void setOrderInProgress(boolean orderInProgress) {
         this.orderInProgress = orderInProgress;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Integer getDishPrice() {
-        return Integer.valueOf(String.valueOf(getPrice() * getQuantity()));
+    public boolean isOrderInProgress() {
+        return orderInProgress;
     }
 
 
-
+    public String orderWithoutPrice() {
+        return ( getId() + ". " + dish.getTitle() + " (" + dish.getQuantity() + "x)    " + "(" + (dish.getQuantity()* dish.getPrice()) + " Kč)" +
+                getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. "
+                +  getWaiterNo() + " ");
+    }
 
     @Override
     public String toString() {
-        return ( getId() + ". " + dish.getTitle() + " (" + getQuantity() + "x)    " + getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. "
-                +  getWaiterNo() + " ");
+        return ( getId() + ". " + dish.getTitle() + " (" + dish.getQuantity() + "x)   " + "(" + (dish.getQuantity()* dish.getPrice()) + " Kč)" +
+                getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. " +  getWaiterNo() + " ");
     }
 
 
