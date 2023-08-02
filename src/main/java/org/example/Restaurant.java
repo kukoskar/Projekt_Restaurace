@@ -9,13 +9,6 @@ import java.util.*;
 public class Restaurant {
 
 
-
-
-
-
-
-  //  List<Order> orderList = new ArrayList<>();
-
     public static void main(String[] args) {
 
         DishList dishList = new DishList();
