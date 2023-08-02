@@ -18,8 +18,6 @@ public class Order extends Dish {
 
    private List<Dish> menuList = new ArrayList<>();
 
-   private List<Order> orderList = new ArrayList<>();
-
 
    private int waiterNo;
 
@@ -113,13 +111,6 @@ public class Order extends Dish {
         this.menuList = menuList;
     }
 
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
-    }
 
     public LocalTime getFulfilmentTime() {
        return fulfilmentTime;
@@ -139,21 +130,22 @@ public class Order extends Dish {
     }
 
 
-    public String orderWithoutPrice() {
-        return ( getId() + ". " + dish.getTitle() + " (" + dish.getQuantity() + "x)    " + "(" + (dish.getQuantity()* dish.getPrice()) + " Kč)" +
+
+
+    public String orderInfo() {
+        return ( dish.getTitle() + " (" + dish.getQuantity() + "x)    " + "(" + (dish.getQuantity()* dish.getPrice()) + " Kč):  " +
                 getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. "
                 +  getWaiterNo() + " ");
     }
 
     @Override
     public String toString() {
-        return ( getId() + ". " + dish.getTitle() + " (" + dish.getQuantity() + "x)   " + "(" + (dish.getQuantity()* dish.getPrice()) + " Kč)" +
+        return ( getId()+ ". " + dish.getTitle() + " " + dish.getQuantity() + "x" + " (" + (dish.getQuantity()* dish.getPrice()) + " Kč):   " +
                 getOrderedTime() + "-" + getFulfilmentTime() + " číšník č. " +  getWaiterNo() + " ");
     }
 
 
-
-   }
+}
 
 
 

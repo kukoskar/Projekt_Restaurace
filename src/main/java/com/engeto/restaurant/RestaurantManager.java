@@ -15,16 +15,47 @@ public class RestaurantManager {
 
     private Order order;
 
+    public Integer totalSpend(){
+        Integer utrataCelkem = 0;
+        for (Order order: this.orderList){
+            for (Dish dish: order.getMenuList()){
+                utrataCelkem += dish.getPrice() * dish.getQuantity();
+            }
+        }
+        return utrataCelkem;
+    }
+
+    public Integer waiterOrderPrice(Integer waiter){
+        Integer utrata=0;
+        for (Order order : this.orderList) {
+            if (order.getWaiterNo() == waiter)
+                for (Dish dish : order.getMenuList())
+                    utrata += dish.getPrice() * dish.getQuantity();
+        }
+        return utrata;
+    }
+
+    public String orderTable(Integer tableNum){
+        String table="";
+        int lineNumber = 0;
+        for (Order order : this.orderList) {
+            lineNumber++;
+            if (order.getTable() == tableNum)
+                for (Dish dish : order.getMenuList())
+                    table +=  lineNumber + ". " + order.orderInfo() + "\n";
+        }
+        return table;
+    }
+
 
 
     public void saveToFile(String filename, String delimeter) throws DishException {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {
-            for (Order order : orderList) {
+           for (Order order : orderList) {
                 String record =
-                         order.getId()+delimeter
-                           +order.getDish()+delimeter
-                           +dish.getQuantity()+"x"+delimeter
-                           +"(" + (dish.getPrice()* dish.getQuantity() +" Kč)")+":"+delimeter
+                         order.getDish()+delimeter
+                      //     +dish.getQuantity()+delimeter
+                    //       +" (" + (dish.getPrice()* dish.getQuantity() +" Kč)")+":"+delimeter
                            +order.getOrderedTime()+"-"+order.getFulfilmentTime()+delimeter
                           +"číšník č. "+ order.getWaiterNo();
                 writer.println(record);
@@ -70,4 +101,18 @@ public class RestaurantManager {
     public void setDish(Dish dish) {
         this.dish = dish;
     }
-}
+
+
+    @Override
+    public String toString() {
+        int lineNumber = 0;
+        for (Order order : this.orderList) {
+            lineNumber++;
+        }
+        return ( lineNumber + ". " + dish.getTitle() + " " + dish.getQuantity() + "x    " + "(" + (dish.getQuantity()* dish.getPrice()) + " Kč) " +
+                order.getOrderedTime() + "-" + order.getFulfilmentTime() + " číšník č. " +  order.getWaiterNo() + " " + "\n");
+    }
+  }
+
+
+

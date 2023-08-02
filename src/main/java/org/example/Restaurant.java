@@ -8,26 +8,13 @@ import java.util.*;
 
 public class Restaurant {
 
-    public Integer totalSpend(){
-        Integer utrataCelkem = 0;
-        for (Order order: this.orderList){
-            for (Dish dish: order.getMenuList()){
-                utrataCelkem += dish.getPrice() * dish.getQuantity();
-            }
-        }
-        return utrataCelkem;
-    }
 
-    public Integer waiterOrderPrice(Integer waiter){
-        Integer utrata=0;
-        for (Order order : this.orderList) {
-            if (order.getWaiterNo() == waiter)
-                for (Dish dish : order.getMenuList())
-                    utrata += dish.getPrice() * dish.getQuantity();
-        }
-        return utrata;
-    }
-    List<Order> orderList = new ArrayList<>();
+
+
+
+
+
+  //  List<Order> orderList = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -71,12 +58,12 @@ public class Restaurant {
 
         order1.addDishWhatIsInMenuWithQuantity(dish2, 2, menuList);
 
-        restaurant.orderList.add(order1);
-        restaurant.orderList.add(order2);
-        restaurant.orderList.add(order3);
-        restaurant.orderList.add(order4);
-        Collections.sort(restaurant.orderList, new SortComparator());
-        restaurant.orderList.forEach( n -> { System.out.println("Číšnik " + n.getWaiterNo() +  ".  objednávka č." + n.getId() + "  čas objednání: " + n.getOrderedTime() );
+        restaurantManager.getOrderList().add(order1);
+        restaurantManager.getOrderList().add(order2);
+        restaurantManager.getOrderList().add(order3);
+        restaurantManager.getOrderList().add(order4);
+        Collections.sort(restaurantManager.getOrderList(), new SortComparator());
+        restaurantManager.getOrderList().forEach( n -> { System.out.println("Číšnik " + n.getWaiterNo() +  ".  objednávka č." + n.getId() + "  čas objednání: " + n.getOrderedTime() );
         } );
 
         System.out.println(order1);
@@ -90,17 +77,17 @@ public class Restaurant {
         System.out.println("Objednávka: " + order3);
         System.out.println("Objednávka: " + order4 + "\n");
 
-        System.out.println("Počet objednávek: " + restaurant.orderList.size());
-        System.out.println("Dnešní objednávky: \n" + restaurant.orderList);
+        System.out.println("Počet objednávek: " + restaurantManager.getOrderList().size());
+        System.out.println("Dnešní objednávky: \n" + restaurantManager.getOrderList());
 
-        System.out.println(restaurantManager.orderInProgress(restaurant.orderList));
-        System.out.println("Cena objednávek pro číšnika 1: " + restaurant.waiterOrderPrice(1) + " Kč"+ "\n");
-        System.out.println("Celková útrata: " + restaurant.totalSpend() + " Kč" + "\n");
+        System.out.println(restaurantManager.orderInProgress(restaurantManager.getOrderList()));
+        System.out.println("Cena objednávek pro číšnika 1: " + restaurantManager.waiterOrderPrice(1) + " Kč"+ "\n");
+        System.out.println("Celková útrata: " + restaurantManager.totalSpend() + " Kč" + "\n");
 
         System.out.println("** Objednávka pro stůl č. 1 **" + "\n"
-                + "****"
-                + restaurant.orderList+ "\n"
-                + "******"
+                + "****" + "\n"
+                + restaurantManager.orderTable(1) + "\n"
+                + "******"+ "\n"
         );
 
 

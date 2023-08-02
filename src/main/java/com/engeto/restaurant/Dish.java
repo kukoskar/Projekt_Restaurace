@@ -126,7 +126,7 @@ public class Dish {
 
     @Override
     public String toString() {
-        return  getId() + ". " + getTitle() + " " + getDescription() + " " + getImage1();
+        return  getId() + ". " + getTitle() + " " + getQuantity() + "x " + "(" + getQuantity()*getPrice() + " Kč)";
     }
 
 
