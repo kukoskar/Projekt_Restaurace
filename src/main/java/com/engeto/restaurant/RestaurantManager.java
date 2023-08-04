@@ -47,25 +47,19 @@ public class RestaurantManager {
         return table;
     }
 
-
-
     public void saveToFile(String filename, String delimeter) throws DishException {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {
            for (Order order : orderList) {
                 String record =
                          order.getDish()+delimeter
-                      //     +dish.getQuantity()+delimeter
-                    //       +" (" + (dish.getPrice()* dish.getQuantity() +" Kč)")+":"+delimeter
-                           +order.getOrderedTime()+"-"+order.getFulfilmentTime()+delimeter
-                          +"číšník č. "+ order.getWaiterNo();
+                         +order.getOrderedTime()+"-"+order.getFulfilmentTime()+delimeter
+                         +"číšník č. "+ order.getWaiterNo();
                 writer.println(record);
             }
         } catch (IOException e) {
             throw new DishException("Došlo k chybě při zápisu do souboru "+filename+ ": " + e.getLocalizedMessage() );
         }
     }
-
-
 
      public String orderInProgress(List<Order> orderList) {
         int orderInPrg=0;

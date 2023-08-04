@@ -4,16 +4,31 @@ import com.engeto.restaurant.*;
 
 import java.time.LocalTime;
 import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
+import static javax.script.ScriptEngine.FILENAME;
 
 public class Restaurant {
 
-
     public static void main(String[] args) {
-
         DishList dishList = new DishList();
-        Restaurant restaurant = new Restaurant();
-        RestaurantManager restaurantManager= new RestaurantManager();
+        RestaurantManager restaurantManager = new RestaurantManager();
+
+        try {
+            File myOrders = new File("objednavky.txt");
+            Scanner myReader = new Scanner(myOrders);
+            while (myReader.hasNextLine()) {
+                String orders = myReader.nextLine();
+                System.out.println(orders);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Nepodařilo se nalézt soubor " + FILENAME
+                    + "\"" + e.getLocalizedMessage());
+            e.printStackTrace();
+        }
 
         ImageUrl imageBlank = new ImageUrl("blank");
         ImageUrl imageRizek1 = new ImageUrl("rizek-01");
@@ -83,7 +98,6 @@ public class Restaurant {
                 + "******"+ "\n"
         );
 
-
         System.out.println(dish1);
         System.out.println(dish2);
         System.out.println("\n");
@@ -99,7 +113,7 @@ public class Restaurant {
         System.out.println(dish1.getDishInfo());
 
         try {
-        restaurantManager.saveToFile(Settings.getFilename(), Settings.getDelimeter());
+        restaurantManager.saveToFile(Settings.getFilename(), Settings.getDelimiter());
         } catch (DishException e) {
             System.err.println(e.getLocalizedMessage());
         }
